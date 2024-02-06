@@ -229,7 +229,7 @@ const funArr = (a, b) => {
 };
 
 // IMPORTANT:
-//*: We can pass as many arguments we want. Here only 2 arguments is specified so only first two arguments will be stored in a and b. But in case of regular function we cal access all arguments using the arguments keyword.
+//*: We can pass as many arguments we want. Here only 2 arguments is specified so only first two arguments will be stored in a and b. But in case of regular function we can access all arguments using the arguments keyword.
 
 funReg(4, 5, 7, 9);
 funArr(4, 7); // ERROR

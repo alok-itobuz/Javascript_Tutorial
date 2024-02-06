@@ -251,3 +251,27 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+// In javascript all numbers are normally float
+console.log(23 === 23.0); // true
+
+console.log(0.1 + 0.2 === 0.3);
+console.log(+'23'); // number
+
+const ob = {
+  name: 'Alok',
+  normalThis() {
+    console.log(this);
+
+    const arrow = () => {
+      console.log(this);
+    };
+    arrow();
+    console.log('---------');
+  },
+  arrowThis: () => {
+    console.log(this);
+  },
+};
+ob.normalThis();
+ob.arrowThis();
