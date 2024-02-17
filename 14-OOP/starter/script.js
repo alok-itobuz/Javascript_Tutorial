@@ -128,13 +128,25 @@ console.log(
 // const PersonCl = class {}                    // both are valid
 class PersonCl {
   constructor(firstName, birthYear) {
-    this.firstName = firstName;
+    this._firstName = firstName;
     this.birthYear = birthYear;
   }
 
   // Methods will be automatically added to .ptototype property
   calcAge() {
     console.log(2037 - this.birthYear);
+  }
+
+  get age() {
+    return 2037 - this.birthYear;
+  }
+
+  set firstName(name) {
+    this._firstName = name;
+  }
+
+  get firstName() {
+    return this._firstName;
   }
 }
 
@@ -144,3 +156,128 @@ PersonCl.prototype.greet = function () {
 };
 
 const jesica = new PersonCl('Jesica', 1996);
+console.log(jesica);
+console.log(jesica.firstName);
+
+// ---------------------------------
+const account = {
+  _owner: 'Alok',
+  movements: [200, 530, 120, 300],
+
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+
+  // set owner(name) {
+  //   this._owner = name;
+  // },
+};
+
+const ownerLatest = account.latest;
+// console.log(ownerLatest);
+
+account.latest = 180;
+// console.log(account.movements);
+
+// account.owner = 'Ranjan';
+// console.log(account);
+
+////////////////////////////////////////////////////////////
+console.log('---------------------STATIC METHOD---------------------------');
+
+// just like Array.from
+
+function FunConstructorSt(firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+}
+
+FunConstructorSt.hey = function () {
+  console.log(`Heyyyyy`);
+  console.log(this);
+};
+
+FunConstructorSt.hey();
+
+class ClassSt {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  static hey() {
+    console.log(`Heyyyyyy from class`);
+  }
+}
+ClassSt.hey();
+
+////////////////////////////////////////////////////////////
+console.log('---------------------OBJECT.CREATE---------------------------');
+
+const PersonProto = {
+  // birthYear: 2002,
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+// console.log(PersonProto);
+const alokOC = Object.create(PersonProto);
+// console.log(alokOC);
+alokOC.init('Alok', 2002);
+// console.log(alokOC);
+alokOC.calcAge();
+
+console.log(alokOC.__proto__ === PersonProto); // true
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+1. Re-create challenge 1, but this time using an ES6 class;
+2. Add a getter called 'speedUS' which returns the current speed in mi/h (divide by 1.6);
+3. Add a setter called 'speedUS' which sets the current speed in mi/h (but converts it to km/h before storing the value, by multiplying the input by 1.6);
+4. Create a new car and experiment with the accelerate and brake methods, and with the getter and setter.
+
+DATA CAR 1: 'Ford' going at 120 km/h
+
+GOOD LUCK 😀
+*/
+
+//////////////////////////////////////////////////////
+console.log('-----------------INHERITANCE-------------------');
+
+const PersonI = function (firstName, birthYear) {
+  console.log(this); // Student
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+PersonI.prototype.calcAge = function () {
+  return 2037 - this.birthYear;
+};
+
+const Student = function (firstName, birthYear, course) {
+  // this.firstName = firstName;
+  // this.birthYear = birthYear;
+
+  PersonI.call(this, firstName, birthYear);
+  // It means the this keyword inside the PersonI function will refer to Student function.
+
+  this.course = course;
+};
+
+// Student.prototype = PersonI.prototype;
+Student.prototype = Object.create(PersonI.prototype);
+Student.prototype.introduce = function () {
+  console.log(`Hello, It's ${this.firstName} having course ${this.course}`);
+};
+
+const alokI = new Student('Alok', 2002, 'Computer Science');
+console.log(alokI);
