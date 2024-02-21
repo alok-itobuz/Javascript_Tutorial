@@ -117,6 +117,7 @@ containerWorkouts.addEventListener('click', function (e) {
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(
     function (position) {
+      console.log(position);
       const { latitude, longitude } = position.coords;
 
       const coords = [latitude, longitude];
@@ -130,6 +131,7 @@ if (navigator.geolocation) {
       }).addTo(map);
 
       map.on('click', function (e) {
+        console.log(e);
         lat = e.latlng.lat;
         lng = e.latlng.lng;
         form.classList.remove('hidden');
